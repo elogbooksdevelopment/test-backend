@@ -1,50 +1,56 @@
-# A starter environment for elogbooks backend test
+# Completed Requirement for elogbooks backend Test
+I have followed the instructions Provided in the mail I received.
 
-To create a PR to this repository you will have to fork this repository, creating your version which you will have write access to, write to that version, and then send a pull request from that version back to the original repository (elogbooksdevelopment/test-backend)
+***Procedures on Setting Up the Backend Environment***
 
-# Symfony Docker
+This is because, the ``docker compose up`` command failed due to dependency issues 
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework, with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
+The  docker compose up command failed
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+```
+40.04 go: github.com/dunglas/mercure/caddy@upgrade (v0.15.7) requires github.com/caddyserver/caddy/v2@v2.7.6, not github.com/caddyserver/caddy/v2@v2.6.4
+40.04 2024/01/19 10:30:30 [FATAL] exit status 1
+```
 
-## Getting Started
 
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --pull --no-cache` to build fresh images
-3. Run `docker compose up` (the logs will be displayed in the current shell)
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
+## Alternatively I developed the system using my local environment
 
-## Features
+System Configuration
+1. OS: Windows 11
+2. Apache Server: Wamp
+3. PHP Version: 8.1.0
+4. MariaDB 10.6.5
+5. Modification on composer.json (Changed Symfony version from 6.2 to 6.3)
 
-* Production, development and CI ready
-* [Installation of extra Docker Compose services](docs/extra-services.md) with Symfony Flex
-* Automatic HTTPS (in dev and in prod!)
-* HTTP/2, HTTP/3 and [Preload](https://symfony.com/doc/current/web_link.html) support
-* Built-in [Mercure](https://symfony.com/doc/current/mercure.html) hub
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Just 2 services (PHP FPM and Caddy server)
-* Super-readable configuration
 
-**Enjoy!**
+#Setup Instruction
+1. `composer install`
+   This will install the dependencies in the composer .json
+2. copy **.env.dist** to **.env**
+3. Configure your DATABASE_URL (Uncomment and modify the database path that best suit your system requirement)
+4. Run `php bin/console doctrine:database:create` (If the database you defined in your path is not existing already) 
+5. Run `php bin/console doctrine:migrations:migrate`
+6. Run `php bin/console doctrine:fixtures:load` This is to provide Pilot data for Facility as described in the task.
+7. Finally, Run `symfony server:start` This will serve the app on localhost
+   1. (Please note that you will need to setup symfony command line on your computer before you can serve)
+   2. You can use this link https://symfony.com/download to see setup instruction.
 
-## Docs
 
-1. [Build options](docs/build.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using a Makefile](docs/makefile.md)
-8. [Troubleshooting](docs/troubleshooting.md)
+## Testing Your Backend
+The Property Listing API is a get api and can conveniently Run on the browser.
+http://127.0.0.1:8000/api/property
+If you get a response that looks like this, then you are good to go.
+```json
+[
+    {
+        "id": 1,
+        "name": "Elogs House Property"
+    }
+]
+```
+I am ready to assist with any difficulty you might encounter during this setup procedure.
 
-## License
 
-Symfony Docker is available under the MIT License.
+The Frontend of this application is developed with React Js and can be cloned from this repository
+https://github.com/jerrywap/elogs-frontend.git
 
-## Credits
-
-Created by [Kévin Dunglas](https://dunglas.fr), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
